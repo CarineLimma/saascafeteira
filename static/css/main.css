@@ -1,0 +1,438 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+
+:root {
+    --bg-base:        #0d0d0d;
+    --bg-elevado:      #1e1e1e;
+    --bg-card:         #161616;
+    --borda:           #2a2a2a;
+    --texto-principal: #f0f0f0;
+    --texto-secundario:#888888;
+    --texto-fraco:     #555555;
+
+    --marrom-acento:       #60a5fa;
+    --marrom-acento-hover: #7db8fb;
+    --marrom-escuro:       #3b82f6;
+
+    --amarelo:  #fbbf24;
+    --azul:     #60a5fa;
+    --verde:    #4ade80;
+    --vermelho: #f87171;
+
+    --sombra: 0 4px 18px rgba(0, 0, 0, 0.35);
+    --raio: 14px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-base);
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    color: var(--texto-principal);
+    margin: 0;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+}
+
+.dashboard-box {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+}
+
+
+
+.topo-dashboard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    border-bottom: 1px solid var(--borda);
+    padding-bottom: 22px;
+}
+
+.topo-dashboard h1 {
+    margin: 0;
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--texto-principal);
+    letter-spacing: 0.2px;
+}
+
+.topo-dashboard p {
+    margin: 6px 0 0;
+    color: var(--texto-secundario);
+    font-size: 0.95rem;
+}
+
+
+.topo-pagina {
+    border-bottom: 1px solid var(--borda);
+    padding-bottom: 22px;
+    margin-bottom: 4px;
+}
+
+.topo-pagina h1 {
+    margin: 0;
+    font-size: 1.9rem;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.topo-pagina p {
+    margin: 6px 0 0;
+    color: var(--texto-secundario);
+    font-size: 0.95rem;
+}
+
+
+
+.btn-voltar,
+.menu-btn {
+    background-color: var(--bg-elevado);
+    color: var(--texto-secundario);
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: 1px solid var(--borda);
+    transition: background-color 0.15s ease, color 0.15s ease;
+    display: inline-block;
+}
+
+.btn-voltar:hover,
+.menu-btn:hover {
+    background-color: var(--bg-elevado);
+    color: var(--texto-principal);
+    border-color: var(--marrom-acento);
+}
+
+.menu-dashboard {
+    margin-top: 10px;
+}
+
+
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--borda);
+    border-radius: var(--raio);
+    padding: 24px;
+    box-shadow: var(--sombra);
+}
+
+.cards-grid .card {
+    text-align: center;
+}
+
+.cards-grid .card h3 {
+    margin: 0 0 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--texto-secundario);
+}
+
+.cards-grid .card p {
+    margin: 0;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--amarelo);
+}
+
+.card h2 {
+    margin: 0 0 20px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+
+
+.input-group,
+.campo {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.input-group label,
+.campo label {
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--texto-secundario);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.input-group input,
+.input-group select,
+.campo input,
+.campo select {
+    padding: 11px 14px;
+    border: 1px solid var(--borda);
+    border-radius: 9px;
+    font-size: 0.95rem;
+    background-color: var(--bg-elevado);
+    color: var(--texto-principal);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    font-family: inherit;
+}
+
+.input-group input::placeholder,
+.campo input::placeholder {
+    color: var(--texto-fraco);
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.campo input:focus,
+.campo select:focus {
+    border-color: var(--marrom-acento);
+    box-shadow: 0 0 0 3px rgba(169, 116, 79, 0.18);
+}
+
+.input-group select option,
+.campo select option {
+    background-color: var(--bg-elevado);
+    color: var(--texto-principal);
+}
+
+.form-produto {
+    display: flex;
+    flex-direction: column;
+}
+
+button[type="submit"],
+.btn-salvar {
+    background-color: var(--marrom-acento);
+    color: #0d0d0d;
+    border: none;
+    padding: 13px 22px;
+    border-radius: 9px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    align-self: flex-start;
+    font-family: inherit;
+}
+
+button[type="submit"]:hover,
+.btn-salvar:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+
+
+
+.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 6px;
+    font-size: 0.92rem;
+}
+
+.tabela thead th {
+    text-align: left;
+    padding: 12px 10px;
+    background-color: var(--bg-elevado);
+    color: var(--texto-secundario);
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--borda);
+}
+
+.tabela thead th:first-child {
+    border-radius: 8px 0 0 8px;
+}
+
+.tabela thead th:last-child {
+    border-radius: 0 8px 8px 0;
+}
+
+.tabela tbody td {
+    padding: 13px 10px;
+    border-bottom: 1px solid var(--borda);
+    vertical-align: middle;
+    color: var(--texto-principal);
+}
+
+.tabela tbody tr:hover {
+    background-color: rgba(169, 116, 79, 0.06);
+}
+
+
+
+.badge-preparo,
+.badge-pronto,
+.badge-entregue,
+.badge-cancelado {
+    display: inline-block;
+    padding: 5px 13px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.badge-preparo {
+    background-color: rgba(232, 185, 91, 0.16);
+    color: var(--amarelo);
+}
+
+.badge-pronto {
+    background-color: rgba(111, 168, 216, 0.16);
+    color: var(--azul);
+}
+
+.badge-entregue {
+    background-color: rgba(111, 191, 138, 0.16);
+    color: var(--verde);
+}
+
+.badge-cancelado {
+    background-color: rgba(217, 122, 122, 0.16);
+    color: var(--vermelho);
+}
+
+
+.btn-editar,
+.btn-excluir {
+    display: inline-block;
+    padding: 6px 13px;
+    border-radius: 7px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    margin-right: 6px;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.btn-editar {
+    background-color: rgba(169, 116, 79, 0.18);
+    color: var(--marrom-acento-hover);
+}
+
+.btn-excluir {
+    background-color: rgba(217, 122, 122, 0.15);
+    color: var(--vermelho);
+}
+
+.btn-editar:hover,
+.btn-excluir:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+
+
+
+
+.lista-produtos-admin {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.produto-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 20px;
+    transition: border-color 0.2s ease, transform 0.15s ease;
+}
+
+.produto-card:hover {
+    border-color: var(--marrom-acento);
+    transform: translateY(-2px);
+}
+
+.produto-info h3 {
+    margin: 0 0 4px;
+    font-size: 1.02rem;
+    font-weight: 600;
+    color: var(--texto-principal);
+}
+
+.produto-info p {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--amarelo);
+}
+
+.btn-delete {
+    background-color: rgba(217, 122, 122, 0.15);
+    color: var(--vermelho);
+    padding: 7px 13px;
+    border-radius: 7px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.btn-delete:hover {
+    opacity: 0.85;
+    transform: translateY(-1px);
+}
+
+
+
+.alert {
+    padding: 13px 18px;
+    border-radius: 9px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid transparent;
+}
+
+.alert-sucesso {
+    background-color: rgba(111, 191, 138, 0.12);
+    color: var(--verde);
+    border-color: rgba(111, 191, 138, 0.25);
+}
+
+.alert-erro {
+    background-color: rgba(217, 122, 122, 0.12);
+    color: var(--vermelho);
+    border-color: rgba(217, 122, 122, 0.25);
+}
+
+@media (max-width: 600px) {
+    .tabela {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .produto-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    button[type="submit"],
+    .btn-salvar {
+        align-self: stretch;
+    }
+}

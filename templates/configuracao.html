@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0d0d0d">
+    <title>Configurações • Café Lumière</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/configuracao.css') }}">
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="sidebar-logo">
+        <span class="logo-icon">☕</span>
+        <div>
+            <div class="logo-name">Café Lumière</div>
+            <div class="logo-sub">Painel administrativo</div>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+
+        <span class="nav-label">Principal</span>
+
+        <a href="{{ url_for('dashboard') }}" class="nav-item">
+            <i class="ti ti-layout-dashboard"></i>
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('pedidos') }}" class="nav-item">
+            <i class="ti ti-receipt"></i>
+            Pedidos
+        </a>
+
+        <a href="{{ url_for('cardapio') }}" class="nav-item">
+            <i class="ti ti-tools-kitchen-2"></i>
+            Cardápio
+        </a>
+
+        <span class="nav-label">Gestão</span>
+
+        <a href="{{ url_for('usuarios') }}" class="nav-item">
+            <i class="ti ti-users"></i>
+            Usuários
+        </a>
+
+        <a href="{{ url_for('produtos') }}" class="nav-item">
+            <i class="ti ti-package"></i>
+            Produtos
+        </a>
+
+        <a href="{{ url_for('configuracoes') }}" class="nav-item active">
+            <i class="ti ti-settings"></i>
+            Configurações
+        </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="user-row">
+            <div class="user-avatar">
+                {{ session['nome'][0] | upper }}
+            </div>
+            <div class="user-info">
+                <div class="user-name">{{ session['nome'] }}</div>
+                <div class="user-role">Administrador</div>
+            </div>
+            <a href="{{ url_for('logout') }}" class="logout-btn" title="Sair">
+                <i class="ti ti-logout"></i>
+            </a>
+        </div>
+    </div>
+
+</aside>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <div class="topbar-title">Configurações</div>
+        <div class="topbar-actions">
+            <a href="{{ url_for('dashboard') }}" class="btn-back">
+                <i class="ti ti-arrow-left"></i>
+                Voltar
+            </a>
+        </div>
+    </header>
+
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    <div class="toast-container">
+        {% for category, message in messages %}
+        <div class="toast toast-{{ category }}">
+            <i class="ti ti-{{ 'check' if category == 'sucesso' else 'alert-circle' }}"></i>
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- PÁGINA -->
+    <div class="content">
+
+        <div class="page-header">
+            <h1 class="page-title">Configurações</h1>
+            <p class="page-sub">Gerencie as informações gerais da cafeteria.</p>
+        </div>
+
+        <div class="config-layout">
+
+            <!-- COLUNA PRINCIPAL: FORMULÁRIOS -->
+            <div class="config-forms">
+
+                <!-- SEÇÃO: DADOS DA CAFETERIA -->
+                <div class="card">
+
+                    <div class="card-header">
+                        <span class="card-title">
+                            <i class="ti ti-building-store"></i>
+                            Dados da cafeteria
+                        </span>
+                    </div>
+
+                    <form method="POST" action="{{ url_for('configuracoes') }}" id="form-cafeteria">
+
+                        <div class="fields-grid">
+
+                            <div class="input-group input-full">
+                                <label for="nome_cafeteria">Nome da cafeteria</label>
+                                <input
+                                    type="text"
+                                    id="nome_cafeteria"
+                                    name="nome_cafeteria"
+                                    value="{{ configuracao['nome_cafeteria'] if configuracao else '' }}"
+                                    placeholder="Ex.: Café Lumière"
+                                    required>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="email_admin">E-mail do administrador</label>
+                                <input
+                                    type="email"
+                                    id="email_admin"
+                                    name="email_admin"
+                                    value="{{ configuracao['email_admin'] if configuracao else '' }}"
+                                    placeholder="admin@cafeteria.com"
+                                    required>
+                            </div>
+
+                        </div>
+
+                        <div class="form-footer">
+                            <button type="submit" class="btn-primary" name="acao" value="dados">
+                                <i class="ti ti-device-floppy"></i>
+                                Salvar dados
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <!-- SEÇÃO: SEGURANÇA -->
+                <div class="card">
+
+                    <div class="card-header">
+                        <span class="card-title">
+                            <i class="ti ti-shield-lock"></i>
+                            Segurança
+                        </span>
+                        <span class="chip">Senha</span>
+                    </div>
+
+                    <form method="POST" action="{{ url_for('configuracoes') }}" id="form-senha">
+
+                        <div class="fields-grid">
+
+                            <div class="input-group">
+                                <label for="senha_atual">Senha atual</label>
+                                <div class="input-password">
+                                    <input
+                                        type="password"
+                                        id="senha_atual"
+                                        name="senha_atual"
+                                        placeholder="Digite sua senha atual"
+                                        autocomplete="current-password">
+                                    <button type="button" class="toggle-senha" data-target="senha_atual" title="Mostrar senha">
+                                        <i class="ti ti-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="nova_senha">Nova senha</label>
+                                <div class="input-password">
+                                    <input
+                                        type="password"
+                                        id="nova_senha"
+                                        name="nova_senha"
+                                        placeholder="Mínimo 8 caracteres"
+                                        autocomplete="new-password">
+                                    <button type="button" class="toggle-senha" data-target="nova_senha" title="Mostrar senha">
+                                        <i class="ti ti-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="confirmar_senha">Confirmar nova senha</label>
+                                <div class="input-password">
+                                    <input
+                                        type="password"
+                                        id="confirmar_senha"
+                                        name="confirmar_senha"
+                                        placeholder="Repita a nova senha"
+                                        autocomplete="new-password">
+                                    <button type="button" class="toggle-senha" data-target="confirmar_senha" title="Mostrar senha">
+                                        <i class="ti ti-eye"></i>
+                                    </button>
+                                </div>
+                                <span class="field-hint" id="hint-senha"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="form-footer">
+                            <button type="submit" class="btn-primary" name="acao" value="senha">
+                                <i class="ti ti-lock"></i>
+                                Atualizar senha
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+            <!-- COLUNA LATERAL: INFO -->
+            <div class="config-sidebar">
+
+                <div class="card info-card">
+                    <div class="info-icon">
+                        <i class="ti ti-info-circle"></i>
+                    </div>
+                    <h3 class="info-title">Sobre as configurações</h3>
+                    <p class="info-text">
+                        As alterações feitas aqui afetam o sistema inteiro. Certifique-se de salvar cada seção separadamente.
+                    </p>
+                </div>
+
+                <div class="card info-card danger-card">
+                    <div class="info-icon danger-icon">
+                        <i class="ti ti-shield-exclamation"></i>
+                    </div>
+                    <h3 class="info-title">Segurança da senha</h3>
+                    <p class="info-text">
+                        Use uma senha com pelo menos 8 caracteres, incluindo letras e números. Nunca compartilhe com terceiros.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/configuracao.js') }}"></script>
+<script>
+    // Toggle mostrar/ocultar senha
+    document.querySelectorAll('.toggle-senha').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const input = document.getElementById(btn.dataset.target);
+            const icon = btn.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'ti ti-eye-off';
+            } else {
+                input.type = 'password';
+                icon.className = 'ti ti-eye';
+            }
+        });
+    });
+
+    // Validação de confirmação de senha em tempo real
+    const novaSenha = document.getElementById('nova_senha');
+    const confirmar = document.getElementById('confirmar_senha');
+    const hint = document.getElementById('hint-senha');
+
+    function validarSenha() {
+        if (!confirmar.value) {
+            hint.textContent = '';
+            hint.className = 'field-hint';
+            return;
+        }
+        if (novaSenha.value === confirmar.value) {
+            hint.textContent = 'Senhas coincidem';
+            hint.className = 'field-hint hint-ok';
+        } else {
+            hint.textContent = 'Senhas não coincidem';
+            hint.className = 'field-hint hint-erro';
+        }
+    }
+
+    novaSenha.addEventListener('input', validarSenha);
+    confirmar.addEventListener('input', validarSenha);
+
+    // Auto-dismiss toast
+    document.querySelectorAll('.toast').forEach(t => {
+        setTimeout(() => t.classList.add('toast-hide'), 4000);
+    });
+</script>
+
+</body>
+</html>

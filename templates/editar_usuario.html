@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Usuário • Café Lumière</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/usuario.css') }}">
+</head>
+
+<body class="dashboard-page">
+
+<div class="container">
+
+    <div class="dashboard-box">
+
+        <div class="topo-dashboard">
+
+            <div>
+                <h1>✏️ Editar Usuário</h1>
+                <p>Atualize as informações do colaborador.</p>
+            </div>
+
+            <a href="{{ url_for('usuarios') }}" class="btn-voltar">
+                ⬅ Voltar
+            </a>
+
+        </div>
+
+        <div class="card">
+
+            <form method="POST">
+
+                <div class="input-group">
+
+                    <label>Nome Completo</label>
+
+                    <input
+                        type="text"
+                        name="nome"
+                        value="{{ usuario.nome }}"
+                        required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>E-mail</label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        value="{{ usuario.email }}"
+                        required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Nova Senha</label>
+
+                    <input
+                        type="password"
+                        name="senha"
+                        placeholder="Deixe em branco para manter a senha atual">
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Cargo</label>
+
+                    <select name="tipo">
+
+                        <option value="funcionario"
+                            {% if usuario.tipo == 'funcionario' %}selected{% endif %}>
+                            Funcionário
+                        </option>
+
+                        <option value="gerente"
+                            {% if usuario.tipo == 'gerente' %}selected{% endif %}>
+                            Gerente
+                        </option>
+
+                        <option value="admin"
+                            {% if usuario.tipo == 'admin' %}selected{% endif %}>
+                            Administrador
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <button type="submit">
+                    💾 Salvar Alterações
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>
+```

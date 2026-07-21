@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios • Café Lumière</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+
+<body class="dashboard-page">
+
+    <div class="container">
+
+        <div class="dashboard-box">
+
+            <div class="topo-dashboard">
+
+                <div>
+                    <h1>📊 Relatórios</h1>
+                    <p>Visão geral do sistema da cafeteria</p>
+                </div>
+
+                <a href="{{ url_for('dashboard') }}" class="btn-voltar">
+                    ⬅ Dashboard
+                </a>
+
+            </div>
+
+            <div class="cards-grid">
+
+                <div class="card">
+                    <h3>📦 Total de Produtos</h3>
+                    <p>{{ total_produtos }}</p>
+                </div>
+
+                <div class="card">
+                    <h3>🧾 Total de Pedidos</h3>
+                    <p>{{ total_pedidos }}</p>
+                </div>
+
+                <div class="card destaque">
+                    <h3>💰 Receita Total</h3>
+                    <p>R$ {{ receita_total }}</p>
+                </div>
+
+            </div>
+
+            <div class="menu">
+
+                <a href="{{ url_for('produtos') }}">
+                    📦 Produtos
+                </a>
+
+                <a href="{{ url_for('pedidos') }}">
+                    🧾 Pedidos
+                </a>
+
+                <a href="{{ url_for('configuracoes') }}">
+                    ⚙️ Configurações
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+        <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</body>
+</html>

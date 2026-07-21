@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0d0d0d">
+    <title>Usuários • Café Lumière</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/usuario.css') }}">
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="sidebar-logo">
+        <span class="logo-icon">☕</span>
+        <div>
+            <div class="logo-name">Café Lumière</div>
+            <div class="logo-sub">Painel administrativo</div>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+
+        <span class="nav-label">Principal</span>
+
+        <a href="{{ url_for('dashboard') }}" class="nav-item">
+            <i class="ti ti-layout-dashboard"></i>
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('pedidos') }}" class="nav-item">
+            <i class="ti ti-receipt"></i>
+            Pedidos
+        </a>
+
+        <a href="{{ url_for('cardapio') }}" class="nav-item">
+            <i class="ti ti-tools-kitchen-2"></i>
+            Cardápio
+        </a>
+
+        <span class="nav-label">Gestão</span>
+
+        <a href="{{ url_for('usuarios') }}" class="nav-item active">
+            <i class="ti ti-users"></i>
+            Usuários
+        </a>
+
+        <a href="{{ url_for('produtos') }}" class="nav-item">
+            <i class="ti ti-package"></i>
+            Produtos
+        </a>
+
+        <a href="{{ url_for('configuracoes') }}" class="nav-item">
+            <i class="ti ti-settings"></i>
+            Configurações
+        </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="user-row">
+            <div class="user-avatar">
+                {{ session['nome'][0] | upper }}
+            </div>
+            <div class="user-info">
+                <div class="user-name">{{ session['nome'] }}</div>
+                <div class="user-role">Administrador</div>
+            </div>
+            <a href="{{ url_for('logout') }}" class="logout-btn" title="Sair">
+                <i class="ti ti-logout"></i>
+            </a>
+        </div>
+    </div>
+
+</aside>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <div class="topbar-title">Usuários</div>
+        <div class="topbar-actions">
+            <a href="{{ url_for('dashboard') }}" class="btn-back">
+                <i class="ti ti-arrow-left"></i>
+                Voltar
+            </a>
+        </div>
+    </header>
+
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    <div class="toast-container">
+        {% for category, message in messages %}
+        <div class="toast toast-{{ category }}">
+            <i class="ti ti-{{ 'check' if category == 'sucesso' else 'alert-circle' }}"></i>
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- PÁGINA -->
+    <div class="content">
+
+        <div class="page-header">
+            <h1 class="page-title">Gestão de Usuários</h1>
+            <p class="page-sub">Gerencie administradores, gerentes e funcionários da cafeteria.</p>
+        </div>
+
+        <!-- MÉTRICAS -->
+        <div class="metrics-grid">
+
+            <div class="metric-card">
+                <div class="metric-label">
+                    <i class="ti ti-users" style="color: var(--color-accent)"></i>
+                    Total
+                </div>
+                <div class="metric-value">{{ total_usuarios }}</div>
+                <div class="metric-delta" style="color: var(--text-muted)">usuários cadastrados</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">
+                    <i class="ti ti-shield" style="color: var(--color-accent)"></i>
+                    Administradores
+                </div>
+                <div class="metric-value">{{ total_admins }}</div>
+                <div class="metric-delta" style="color: var(--text-muted)">com acesso total</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">
+                    <i class="ti ti-briefcase" style="color: var(--color-success)"></i>
+                    Gerentes
+                </div>
+                <div class="metric-value">{{ total_gerentes }}</div>
+                <div class="metric-delta" style="color: var(--text-muted)">acesso intermediário</div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">
+                    <i class="ti ti-tools-kitchen-2" style="color: var(--color-amber)"></i>
+                    Funcionários
+                </div>
+                <div class="metric-value">{{ total_funcionarios }}</div>
+                <div class="metric-delta" style="color: var(--text-muted)">acesso básico</div>
+            </div>
+
+        </div>
+
+        <div class="usuarios-layout">
+
+            <!-- FORMULÁRIO NOVO USUÁRIO -->
+            <div class="card">
+
+                <div class="card-header">
+                    <span class="card-title">
+                        <i class="ti ti-user-plus"></i>
+                        Novo usuário
+                    </span>
+                </div>
+
+                <p class="card-desc">Cadastre novos colaboradores e defina o nível de acesso.</p>
+
+                <form method="POST" action="{{ url_for('usuarios') }}">
+
+                    <div class="input-group">
+                        <label>Nome completo</label>
+                        <input
+                            type="text"
+                            name="nome"
+                            placeholder="Ex.: João da Silva"
+                            required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>E-mail</label>
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="usuario@cafeteria.com"
+                            required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Senha inicial</label>
+                        <div class="input-password">
+                            <input
+                                type="password"
+                                name="senha"
+                                id="senha-novo"
+                                placeholder="Mínimo 8 caracteres"
+                                required>
+                            <button type="button" class="toggle-senha" data-target="senha-novo" title="Mostrar senha">
+                                <i class="ti ti-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Nível de acesso</label>
+                        <select name="tipo" required>
+                            <option value="funcionario">👨‍🍳 Funcionário</option>
+                            <option value="gerente">👨‍💼 Gerente</option>
+                        </select>
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="btn-primary">
+                            <i class="ti ti-plus"></i>
+                            Cadastrar usuário
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <!-- TABELA DE USUÁRIOS -->
+            <div class="card card-table">
+
+                <div class="card-header">
+                    <span class="card-title">
+                        <i class="ti ti-list"></i>
+                        Usuários cadastrados
+                    </span>
+                    <span class="chip">{{ total_usuarios }} registros</span>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Cargo</th>
+                                <th style="text-align: right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for usuario in usuarios %}
+                            <tr>
+                                <td class="td-muted">{{ usuario.id }}</td>
+                                <td>{{ usuario.nome }}</td>
+                                <td class="td-muted">{{ usuario.email }}</td>
+                                <td>
+                                    {% if usuario.tipo == 'admin' %}
+                                        <span class="pill pill-blue">
+                                            <i class="ti ti-shield"></i> Admin
+                                        </span>
+                                    {% elif usuario.tipo == 'gerente' %}
+                                        <span class="pill pill-green">
+                                            <i class="ti ti-briefcase"></i> Gerente
+                                        </span>
+                                    {% else %}
+                                        <span class="pill pill-amber">
+                                            <i class="ti ti-tools-kitchen-2"></i> Funcionário
+                                        </span>
+                                    {% endif %}
+                                </td>
+                                <td style="text-align: right">
+                                    <a href="{{ url_for('editar_usuario', id=usuario.id) }}" class="btn-editar">
+                                        <i class="ti ti-pencil"></i>
+                                        Editar
+                                    </a>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="5" class="empty-state">
+                                    <i class="ti ti-users"></i>
+                                    Nenhum usuário cadastrado ainda.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/usuario.js') }}"></script>
+<script>
+    // Toggle mostrar/ocultar senha
+    document.querySelectorAll('.toggle-senha').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const input = document.getElementById(btn.dataset.target);
+            const icon = btn.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'ti ti-eye-off';
+            } else {
+                input.type = 'password';
+                icon.className = 'ti ti-eye';
+            }
+        });
+    });
+
+    // Auto-dismiss toast
+    document.querySelectorAll('.toast').forEach(t => {
+        setTimeout(() => t.classList.add('toast-hide'), 4000);
+    });
+</script>
+
+</body>
+</html>

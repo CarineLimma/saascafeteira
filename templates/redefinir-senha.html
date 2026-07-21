@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#1b1411">
+
+    <title>Redefinir Senha • Café Lumière</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/auth.css') }}">
+
+</head>
+
+<body>
+
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <div class="logo-area">
+
+                <h1>☕ Café Lumière</h1>
+
+                <p class="slogan">
+                    Redefina sua senha de acesso
+                </p>
+
+            </div>
+
+            <h2>Nova Senha</h2>
+
+            <p class="subtitulo">
+                Informe seu e-mail e crie uma nova senha para acessar o sistema.
+            </p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for categoria, mensagem in messages %}
+
+                        <div class="mensagem-erro">
+                            {{ mensagem }}
+                        </div>
+
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('redefinir_senha') }}" method="POST">
+
+                <div class="input-group">
+
+                    <label for="email">
+                        E-mail
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="Digite seu e-mail"
+                        required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="senha">
+                        Nova Senha
+                    </label>
+
+                    <input
+                        type="password"
+                        id="senha"
+                        name="senha"
+                        placeholder="Digite sua nova senha"
+                        required>
+
+                </div>
+
+                <button type="submit">
+                    Redefinir Senha
+                </button>
+
+            </form>
+
+            <div class="links-auth">
+
+                <p>
+                    Lembrou sua senha?
+                    <a href="{{ url_for('login') }}">
+                        Voltar ao Login
+                    </a>
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+
+</body>
+</html>

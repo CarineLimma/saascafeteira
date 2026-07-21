@@ -1,0 +1,240 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-family:'Poppins', sans-serif;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.65),
+            rgba(0,0,0,0.75)
+        ),
+        url("../img/cafe1.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+}
+
+
+.auth-container{
+    width:100%;
+    max-width:500px;
+    padding:20px;
+    margin:auto;
+}
+
+body.pagina-cadastro{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-family:'Poppins', sans-serif;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.65),
+            rgba(0,0,0,0.75)
+        ),
+
+        url("../img/cafe1.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+}
+
+.auth-card{
+    background:black !important;
+    border:1px solid rgba(139,94,60,0.3);
+
+      box-shadow:
+        0 0 20px rgba(139,94,60,0.30),
+        0 0 40px rgba(139,94,60,0.15);
+
+    width:500px !important;
+    padding:40px !important;
+
+    border-radius:20px !important;
+}
+
+
+.logo-area{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.logo-area h1{
+    color:#ffffff;
+    font-size:2rem;
+    margin-bottom:10px;
+}
+
+.slogan{
+    color:#cfcfcf;
+    font-size:14px;
+}
+
+
+
+.auth-card h2{
+    color:#ffffff;
+    text-align:center;
+    margin-bottom:10px;
+}
+
+.subtitulo{
+    color:#cfcfcf;
+    text-align:center;
+    font-size:14px;
+    margin-bottom:25px;
+    line-height:1.6;
+}
+
+
+
+.mensagem-erro{
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:20px;
+    text-align:center;
+    font-size:14px;
+
+    background:#5a1d1d;
+    color:#fff;
+    border:1px solid #ff6b6b;
+}
+
+
+
+form{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+
+
+.input-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.input-group label{
+    color:#f0f0f0;
+    margin-bottom:8px;
+    font-size:14px;
+}
+
+.input-group input{
+    padding:14px;
+
+    border-radius:10px;
+
+    border:1px solid #333;
+
+    background:#1a1a1a;
+
+    color:#fff;
+
+    outline:none;
+
+    transition:0.3s;
+}
+
+.input-group input:focus{
+    border-color:#8B5E3C;
+
+    box-shadow:
+        0 0 10px rgba(139,94,60,0.5);
+}
+
+
+button[type="submit"]{
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#8B5E3C;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+button[type="submit"]:hover{
+    background:#a56f47;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 5px 15px rgba(139,94,60,0.5);
+}
+
+
+
+.links-auth{
+    text-align:center;
+    margin-top:20px;
+}
+
+.links-auth p{
+    color:#cfcfcf;
+}
+
+.links-auth a{
+    color:#c89a6b;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.links-auth a:hover{
+    color:white;
+}
+
+
+
+.info-acesso{
+    margin-top:25px;
+    padding-top:20px;
+    text-align:center;
+
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.info-acesso small{
+    color:#a8a8a8;
+    line-height:1.5;
+}
+
+
+
+@media(max-width:600px){
+
+    .auth-card{
+        padding:30px 25px;
+    }
+
+    .logo-area h1{
+        font-size:1.7rem;
+    }
+
+}

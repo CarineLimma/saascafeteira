@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Esqueci a Senha</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+ 
+</head>
+
+<body>
+
+  <div class="container-usuario">
+
+    <h1>Recuperar Senha</h1>
+
+    <!-- mensagens do Flask -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="msg {% if category == 'erro' %}msg-erro{% else %}msg-sucesso{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <p style="text-align:center; font-size:14px; color:#ccc; margin-bottom:15px;">
+      Digite seu e-mail para receber o link de redefinição de senha
+    </p>
+
+    <form method="POST" action="/esqueci-senha">
+
+      <input type="email" name="email" placeholder="Seu e-mail cadastrado" required>
+
+      <button class="btn-usuario" type="submit">
+        Enviar link
+      </button>
+
+    </form>
+
+    <a class="link-usuario" href="/">
+      Voltar ao login
+    </a>
+
+  </div>
+   <script defer src="/static/usuario.js"></script>
+</body>
+
+</html>

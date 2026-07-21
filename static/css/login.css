@@ -1,0 +1,243 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+
+
+body.pagina-login{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-family:'Poppins', sans-serif;
+
+    background:
+        linear-gradient(
+            rgba(0,0,0,0.65),
+            rgba(0,0,0,0.75)
+        ),
+        url("../img/cafe1.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+}
+
+
+
+.container{
+    width:100%;
+    max-width:500px;
+    padding:20px;
+}
+
+
+
+.login-box{
+    background:rgba(0,0,0,0.88);
+
+    backdrop-filter:blur(8px);
+
+    border-radius:20px;
+
+    padding:40px;
+
+    border:1px solid rgba(139,94,60,0.3);
+
+    box-shadow:
+        0 0 20px rgba(139,94,60,0.30),
+        0 0 40px rgba(139,94,60,0.15);
+}
+
+
+
+.topo-login{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.topo-login h1{
+    color:#ffffff;
+    font-size:2rem;
+    margin-bottom:10px;
+}
+
+.topo-login p{
+    color:#cfcfcf;
+    font-size:14px;
+}
+
+
+.alerta{
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:20px;
+    text-align:center;
+    font-size:14px;
+}
+
+.alerta.erro{
+    background:#5a1d1d;
+    color:#fff;
+    border:1px solid #ff6b6b;
+}
+
+
+.form-login{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.campo{
+    display:flex;
+    flex-direction:column;
+}
+
+.campo label{
+    color:#f0f0f0;
+    margin-bottom:8px;
+    font-size:14px;
+}
+
+.campo input{
+    padding:14px;
+
+    border-radius:10px;
+
+    border:1px solid #333;
+
+    background:#1a1a1a;
+
+    color:#fff;
+
+    outline:none;
+
+    transition:0.3s;
+}
+
+.campo input:focus{
+    border-color:#8B5E3C;
+
+    box-shadow:
+        0 0 10px rgba(139,94,60,0.5);
+}
+
+
+
+.btn-login{
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#8B5E3C;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:0.3s;
+}
+
+.btn-login:hover{
+    background:#a56f47;
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 5px 15px rgba(139,94,60,0.5);
+}
+
+
+.links-login{
+    text-align:center;
+    margin-top:20px;
+}
+
+.links-login a{
+    color:#c89a6b;
+    text-decoration:none;
+    font-size:14px;
+}
+
+.links-login a:hover{
+    color:white;
+}
+
+
+.cadastro-link{
+    text-align:center;
+    margin-top:25px;
+}
+
+.cadastro-link p{
+    color:#cfcfcf;
+}
+
+.cadastro-link a{
+    color:#c89a6b;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.cadastro-link a:hover{
+    color:white;
+}
+
+
+.senha-container{
+    position: relative;
+    width: 100%;
+}
+
+.senha-container input{
+    width: 100%;
+    padding-right: 50px;
+}
+
+.toggle-senha{
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    background: transparent;
+    border: none;
+
+    cursor: pointer;
+
+    color: #c89a6b;
+
+    font-size: 1.1rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.3s;
+}
+
+.toggle-senha:hover{
+    color: #ffffff;
+}
+
+@media(max-width:600px){
+
+    .login-box{
+        padding:30px 25px;
+    }
+
+    .topo-login h1{
+        font-size:1.7rem;
+    }
+
+}

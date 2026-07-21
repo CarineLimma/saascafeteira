@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard • Café Lumière</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="sidebar-logo">
+        <span class="logo-icon">☕</span>
+        <div>
+            <div class="logo-name">Café Lumière</div>
+            <div class="logo-sub">Painel administrativo</div>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+
+        <span class="nav-label">Principal</span>
+
+        <a href="{{ url_for('dashboard') }}" class="nav-item active">
+            <i class="ti ti-layout-dashboard"></i>
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('pedidos') }}" class="nav-item">
+            <i class="ti ti-receipt"></i>
+            Pedidos
+        </a>
+
+        <a href="{{ url_for('cardapio') }}" class="nav-item">
+            <i class="ti ti-tools-kitchen-2"></i>
+            Cardápio
+        </a>
+
+        <span class="nav-label">Gestão</span>
+
+        <a href="{{ url_for('usuarios') }}" class="nav-item">
+            <i class="ti ti-users"></i>
+            Usuários
+        </a>
+
+        <a href="{{ url_for('produtos') }}" class="nav-item">
+            <i class="ti ti-package"></i>
+            Produtos
+        </a>
+
+        <a href="{{ url_for('configuracoes') }}" class="nav-item">
+            <i class="ti ti-settings"></i>
+            Configurações
+        </a>
+
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="user-row">
+            <div class="user-avatar">
+                {{ session['nome'][0] | upper }}
+            </div>
+            <div class="user-info">
+                <div class="user-name">{{ session['nome'] }}</div>
+                <div class="user-role">Administrador</div>
+            </div>
+            <a href="{{ url_for('logout') }}" class="logout-btn" title="Sair">
+                <i class="ti ti-logout"></i>
+            </a>
+        </div>
+    </div>
+
+</aside>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <div class="topbar-title">Visão geral</div>
+        <div class="topbar-actions">
+            <div class="date-chip">
+                <i class="ti ti-calendar"></i>
+                <span id="data-atual"></span>
+            </div>
+            <button class="icon-btn" title="Notificações">
+                <i class="ti ti-bell"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- FLASH MESSAGES -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    <div class="toast-container">
+        {% for category, message in messages %}
+        <div class="toast toast-{{ category }}">
+            <i class="ti ti-{{ 'check' if category == 'sucesso' else 'alert-circle' }}"></i>
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- PÁGINA -->
+    <div class="content">
+
+        <div class="page-header">
+            <h1 class="page-title">Dashboard</h1>
+            <p class="page-sub">Bem-vindo de volta, {{ session['nome'] }}.</p>
+        </div>
+
+        <!-- MÉTRICAS -->
+        <div class="metrics-grid">
+
+            <div class="metric-card">
+                <div class="metric-label">
+                    <i class="ti ti-trending-up" style="color: var(--color-success)"></i>
+                    Entradas
+                </div>
+                <div class="metric-value">R$ {{ "%.2f"|format(entradas) }}</div>
+                <div class="metric-delta delta-up">
+                    <i class="ti ti-arrow-up-right"></i> este mês
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">
+                    <i class="ti ti-trending-down" style="color: var(--color-danger)"></i>
+                    Saídas
+                </div>
+                <div class="metric-value">R$ {{ "%.2f"|format(saidas) }}</div>
+                <div class="metric-delta delta-down">
+                    <i class="ti ti-arrow-down-right"></i> este mês
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">
+                    <i class="ti ti-wallet" style="color: var(--color-accent)"></i>
+                    Saldo
+                </div>
+                <div class="metric-value {% if saldo < 0 %}valor-negativo{% endif %}">
+                    R$ {{ "%.2f"|format(saldo) }}
+                </div>
+                <div class="metric-delta {% if saldo >= 0 %}delta-up{% else %}delta-down{% endif %}">
+                    <i class="ti ti-{% if saldo >= 0 %}arrow-up-right{% else %}arrow-down-right{% endif %}"></i>
+                    {{ 'positivo' if saldo >= 0 else 'negativo' }}
+                </div>
+            </div>
+
+            <div class="metric-card">
+                <div class="metric-label">
+                    <i class="ti ti-file-text" style="color: #EF9F27"></i>
+                    Transações
+                </div>
+                <div class="metric-value">{{ transacoes | length }}</div>
+                <div class="metric-delta" style="color: var(--color-muted)">
+                    registros no total
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <div class="card-header">
+                <span class="card-title">
+                    <i class="ti ti-plus"></i>
+                    Nova transação
+                </span>
+            </div>
+
+            <form method="POST" action="{{ url_for('add_transacao') }}" class="form-inline">
+
+                <div class="input-group">
+                    <label>Tipo</label>
+                    <select name="tipo" required>
+                        <option value="entrada">Entrada</option>
+                        <option value="saida">Saída</option>
+                    </select>
+                </div>
+
+                <div class="input-group input-grow">
+                    <label>Descrição</label>
+                    <input type="text" name="descricao" placeholder="Ex.: Venda de café" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Valor (R$)</label>
+                    <input type="number" name="valor" step="0.01" min="0" placeholder="0,00" required>
+                </div>
+
+                <button type="submit" class="btn-primary">
+                    <i class="ti ti-plus"></i>
+                    Registrar
+                </button>
+
+            </form>
+
+        </div>
+
+        <!-- TABELA DE TRANSAÇÕES -->
+        <div class="card">
+
+            <div class="card-header">
+                <span class="card-title">
+                    <i class="ti ti-list"></i>
+                    Transações recentes
+                </span>
+                <span class="chip">{{ transacoes | length }} registros</span>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Tipo</th>
+                            <th style="text-align: right">Valor</th>
+                            <th style="text-align: right">Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for t in transacoes %}
+                        <tr>
+                            <td class="td-muted">{{ t.data }}</td>
+                            <td>{{ t.descricao }}</td>
+                            <td>
+                                {% if t.tipo == 'entrada' %}
+                                    <span class="pill pill-green">
+                                        <i class="ti ti-arrow-up-right"></i> Entrada
+                                    </span>
+                                {% else %}
+                                    <span class="pill pill-red">
+                                        <i class="ti ti-arrow-down-right"></i> Saída
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td style="text-align: right" class="{{ 'valor-positivo' if t.tipo == 'entrada' else 'valor-negativo' }}">
+                                {{ '+' if t.tipo == 'entrada' else '−' }} R$ {{ "%.2f"|format(t.valor) }}
+                            </td>
+                            <td style="text-align: right">
+                                <a href="{{ url_for('delete', id=t.id) }}"
+                                   class="btn-excluir"
+                                   onclick="return confirm('Excluir esta transação?')">
+                                    <i class="ti ti-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="5" class="empty-state">
+                                <i class="ti ti-inbox"></i>
+                                Nenhuma transação registrada ainda.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- MODAL DE CONFIRMAÇÃO (substitui o confirm() nativo) -->
+<div id="modal-overlay" class="modal-overlay hidden">
+    <div class="modal">
+        <div class="modal-icon"><i class="ti ti-alert-triangle"></i></div>
+        <h3 class="modal-title">Excluir transação?</h3>
+        <p class="modal-body">Essa ação não pode ser desfeita.</p>
+        <div class="modal-actions">
+            <button class="btn-ghost" id="modal-cancel">Cancelar</button>
+            <a href="#" id="modal-confirm" class="btn-danger">Excluir</a>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+<script>
+    // Data atual no topbar
+    const hoje = new Date();
+    document.getElementById('data-atual').textContent =
+        hoje.toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+
+    // Modal de confirmação
+    const overlay = document.getElementById('modal-overlay');
+    const confirmLink = document.getElementById('modal-confirm');
+
+    document.querySelectorAll('.btn-excluir').forEach(btn => {
+        btn.addEventListener('click', e => {
+            e.preventDefault();
+            confirmLink.href = btn.href;
+            overlay.classList.remove('hidden');
+        });
+    });
+
+    document.getElementById('modal-cancel').addEventListener('click', () => {
+        overlay.classList.add('hidden');
+    });
+
+    overlay.addEventListener('click', e => {
+        if (e.target === overlay) overlay.classList.add('hidden');
+    });
+
+    // Auto-dismiss toast
+    document.querySelectorAll('.toast').forEach(t => {
+        setTimeout(() => t.classList.add('toast-hide'), 4000);
+    });
+</script>
+
+</body>
+</html>

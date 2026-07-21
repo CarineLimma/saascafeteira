@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cadastro</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/cadastro.css') }}">
+</head>
+
+<body>
+
+  <div class="container-usuario">
+
+  
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="msg {% if category == 'erro' %}msg-erro{% else %}msg-sucesso{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+<body class="pagina-cadastro">
+
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <div class="logo-area">
+
+                <h1>☕ Café Lumière</h1>
+
+                <p class="slogan">
+                    Sistema inteligente para gestão de cafeterias
+                </p>
+
+            </div>
+
+            <h2>Criar Conta</h2>
+
+            <form method="POST" action="/registro">
+
+                <div class="input-group">
+                    <input type="text"
+                           name="nome"
+                           placeholder="Nome completo"
+                           required>
+                </div>
+
+                <div class="input-group">
+                    <input type="email"
+                           name="email"
+                           placeholder="Email"
+                           required>
+                </div>
+
+                <div class="input-group">
+                    <input type="password"
+                           name="senha"
+                           placeholder="Senha"
+                           required>
+                </div>
+
+                <button class="btn-usuario" type="submit">
+                    Cadastrar
+                </button>
+
+            </form>
+
+            <div class="links-auth">
+                <a href="/login">Já tenho conta</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

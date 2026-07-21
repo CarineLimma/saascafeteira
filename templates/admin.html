@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1b1411">
+
+    <title>Administrador • Café Lumière</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+
+<body class="pagina-cadastro">
+
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <div class="logo-area">
+
+                <h1>☕ Café Lumière</h1>
+
+            </div>
+
+            <h2>Cadastrar Administrador</h2>
+
+            <p class="subtitulo">
+                Crie uma conta de administrador com acesso completo ao sistema.
+            </p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for categoria, mensagem in messages %}
+
+                        <div class="mensagem-erro">
+                            {{ mensagem }}
+                        </div>
+
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('admin') }}" method="POST" class="form-admin">
+
+    <div class="input-group">
+
+        <label for="nome">
+            Nome do Administrador
+        </label>
+
+        <input
+            type="text"
+            id="nome"
+            name="nome"
+            placeholder="Digite o nome completo"
+            required>
+
+    </div>
+
+    <div class="input-group">
+
+        <label for="email">
+            E-mail Administrativo
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="admin@cafeteria.com"
+            required>
+
+    </div>
+
+    <div class="input-group">
+
+        <label for="senha">
+            Senha
+        </label>
+
+        <div class="senha-container">
+
+            <input
+                type="password"
+                id="senha"
+                name="senha"
+                placeholder="Crie uma senha segura"
+                required>
+
+            <button
+                type="button"
+                class="toggle-senha"
+                id="toggleSenha">
+
+                <i class="bi bi-eye-fill"></i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <button type="submit" class="btn-admin">
+        Criar Administrador
+    </button>
+
+</form>
+
+            <div class="links-auth">
+
+                <p>
+                    Voltar para
+                    <a href="{{ url_for('login') }}">
+                        Login
+                    </a>
+                </p>
+
+            </div>
+
+            <div class="info-acesso">
+
+                <small>
+                    Administradores possuem acesso total ao dashboard,
+                    pedidos, cardápio, relatórios e configurações.
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+
+</body>
+
+</html>

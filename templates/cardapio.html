@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1b1411">
+
+  <title>Cardápio - Café Lumière</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/cardapio.css') }}">
+</head>
+
+<body>
+  <header class="topo">
+
+    <h2>Café Lumière</h2>
+
+    <input
+  type="search"
+  id="busca"
+  class="busca"
+  placeholder="🔍 Buscar no cardápio..."
+  onkeyup="pesquisarProdutos()"
+>
+
+    <a href="{{ url_for('dashboard') }}">← Dashboard</a>
+
+  </header>
+
+  <div class="filtros">
+
+    <button onclick="irPara('quentes')">☕ Quentes</button>
+
+    <button onclick="irPara('geladas')">🧊 Geladas</button>
+
+    <button onclick="irPara('milk')">🥤 Milkshakes</button>
+
+    <button onclick="irPara('salgados')">🥪 Salgados</button>
+
+    <button onclick="irPara('doces')">🍰 Doces</button>
+
+  </div>
+
+ 
+  <section class="container">
+
+   
+    <div class="produtos">
+
+      
+      <div class="categoria" id="quentes">
+
+        <h2>Bebidas Quentes</h2>
+
+        <div class="lista-produtos">
+
+          <div class="item">
+            <img src="static/img/cafe especcial.jpg" alt="Café Especial">
+
+            <h3>Café Especial</h3>
+
+            <div class="footer-item">
+
+              <span class="preco">R$ 10,00</span>
+
+              <div class="acoes">
+
+                <button onclick="alterarQuantidade(this, -1, 'Café Especial', 10)">-</button>
+
+                <span class="qtd">0</span>
+
+                <button onclick="alterarQuantidade(this, 1, 'Café Especial', 10)">+</button>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="item">
+
+            <img src="static/img/latte.jpg" alt="Café Latte">
+
+            <h3>Café Latte</h3>
+
+            <div class="footer-item">
+
+              <span class="preco">R$ 12,00</span>
+
+              
+              <div class="acoes">
+
+                <button onclick="alterarQuantidade(this, -1, 'Café Latte', 12)">-</button>
+
+                <span class="qtd">0</span>
+
+                <button onclick="alterarQuantidade(this, 1, 'Café Latte', 12)">+</button>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="item">
+
+            <img src="static/img/cappuccino.jpg" alt="Capuccino">
+
+            <h3>Capuccino</h3>
+
+            <div class="footer-item">
+
+              <span class="preco">R$ 13,00</span>
+
+              <div class="acoes">
+
+                <button onclick="alterarQuantidade(this, -1, 'Capuccino', 13)">-</button>
+
+                <span class="qtd">0</span>
+
+                <button onclick="alterarQuantidade(this, 1, 'Capuccino', 13)">+</button>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="item">
+
+            <img src="static/img/mocha.jpg" alt="Mocha">
+
+            <h3>Mocha</h3>
+
+            <div class="footer-item">
+
+              <span class="preco">R$ 14,00</span>
+
+              <div class="acoes">
+
+                <button onclick="alterarQuantidade(this, -1, 'Mocha', 14)">-</button>
+
+                <span class="qtd">0</span>
+
+                <button onclick="alterarQuantidade(this, 1, 'Mocha', 14)">+</button>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="item">
+
+            <img src="static/img/expresso.jpg" alt="Expresso">
+
+            <h3>Expresso</h3>
+
+            <div class="footer-item">
+
+              <span class="preco">R$ 9,00</span>
+
+              <div class="acoes">
+
+                <button onclick="alterarQuantidade(this, -1, 'Expresso', 9)">-</button>
+
+                <span class="qtd">0</span>
+
+                <button onclick="alterarQuantidade(this, 1, 'Expresso', 9)">+</button>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="item">
+
+            <img src="static/img/macchiato.jpg" alt="Macchiato">
+
+            <h3>Macchiato</h3>
+
+            <div class="footer-item">
+
+              <span class="preco">R$ 11,00</span>
+
+              <div class="acoes">
+
+                <button onclick="alterarQuantidade(this, -1, 'Macchiato', 11)">-</button>
+
+                <span class="qtd">0</span>
+
+                <button onclick="alterarQuantidade(this, 1, 'Macchiato', 11)">+</button>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+   
+      <div class="categoria" id="geladas">
+
+        <h2>Bebidas Geladas</h2>
+
+        <div class="lista-produtos">
+
+          <div class="item">
+
+            <img src="static/img/leite gelado.jpg" alt="Leite Gelado">
+
+            <h3>Leite Gelado com Chocolate Branco</h3>
+
+            <div class="footer-item">
+
+              <span class="preco">R$ 10,00</span>
+
+              <div class="acoes">
+
+                <button onclick="alterarQuantidade(this, -1, 'Leite Gelado com Chocolate Branco', 10)">-</button>
+
+                <span class="qtd">0</span>
+
+                <button onclick="alterarQuantidade(this, 1, 'Leite Gelado com Chocolate Branco', 10)">+</button>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="item">
+
+            <img src="static/img/chocolate gelado.jpg" alt="Chocolate Gelado">
+
+            <h3>Chocolate Gelado</h3>
+
+            <div class="footer-item">
+
+              <span class="preco">R$ 12,00</span>
+
+              <div class="acoes">
+
+                <button onclick="alterarQuantidade(this, -1, 'Chocolate Gelado', 12)">-</button>
+
+                <span class="qtd">0</span>
+
+                <button onclick="alterarQuantidade(this, 1, 'Chocolate Gelado', 12)">+</button>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="item">
+
+            <img src="static/img/smoothie frutas.jpg" alt="Smoothie">
+
+            <h3>Smoothie de Frutas Vermelhas</h3>
+
+            <div class="footer-item">
+
+              <span class="preco">R$ 13,00</span>
+
+              <div class="acoes">
+
+                <button onclick="alterarQuantidade(this, -1, 'Smoothie de Frutas Vermelhas', 13)">-</button>
+
+                <span class="qtd">0</span>
+
+                <button onclick="alterarQuantidade(this, 1, 'Smoothie de Frutas Vermelhas', 13)">+</button>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="item">
+
+            <img src="static/img/iced coffee doce de leite.jpg" alt="Iced Coffee">
+
+            <h3>Iced Coffee com Doce de Leite</h3>
+
+            <div class="footer-item">
+
+              <span class="preco">R$ 14,00</span>
+
+              <div class="acoes">
+
+                <button onclick="alterarQuantidade(this, -1, 'Iced Coffee com Doce de Leite', 14)">-</button>
+
+                <span class="qtd">0</span>
+
+                <button onclick="alterarQuantidade(this, 1, 'Iced Coffee com Doce de Leite', 14)">+</button>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="item">
+
+            <img src="static/img/iced coffee.jpg" alt="Iced Coffee">
+
+            <h3>Iced Coffee</h3>
+
+            <div class="footer-item">
+
+              <span class="preco">R$ 12,00</span>
+
+              <div class="acoes">
+
+                <button onclick="alterarQuantidade(this, -1, 'Iced Coffee', 12)">-</button>
+
+                <span class="qtd">0</span>
+
+                <button onclick="alterarQuantidade(this, 1, 'Iced Coffee', 12)">+</button>
+
+              </div>
+
+            </div>
+          </div>
+
+          <div class="item">
+
+            <img src="static/img/milk coffee.png" alt="Milk Coffee">
+
+            <h3>Milk Coffee</h3>
+
+            <div class="footer-item">
+
+              <span class="preco">R$ 15,00</span>
+
+              <div class="acoes">
+
+                <button onclick="alterarQuantidade(this, -1, 'Milk Coffee', 15)">-</button>
+
+                <span class="qtd">0</span>
+
+                <button onclick="alterarQuantidade(this, 1, 'Milk Coffee', 15)">+</button>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+   
+    <div class="carrinho">
+
+      <h2>Seu Pedido</h2>
+
+      <ul id="lista"></ul>
+
+      <div class="resumo">
+
+        <p>Total: <span id="total">R$ 0</span></p>
+
+       <button onclick="abrirModal()">
+          Finalizar Pedido
+      </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <div id="modal" class="modal">
+
+    <div class="modal-content">
+
+      <h2>Finalizar Pedido</h2>
+
+      <input type="text" placeholder="Nome completo">
+
+      <input type="text" placeholder="Endereço">
+
+      <input type="email" placeholder="E-mail">
+
+      <input type="text" placeholder="WhatsApp">
+
+      <label>Entrega</label>
+
+      <select>
+        <option>Selecione</option>
+        <option>Retirar no local</option>
+        <option>Entrega</option>
+      </select>
+
+      <label>Pagamento</label>
+
+      <select>
+        <option>Selecione</option>
+        <option>PIX</option>
+        <option>Cartão</option>
+        <option>Pagar na entrega</option>
+      </select>
+
+      <div class="modal-botoes">
+
+        <button class="btn-enviar" onclick="enviarWhatsApp()">
+          Confirmar Pedido
+        </button>
+
+        <button class="btn-fechar" onclick="fecharModal()">
+          Cancelar
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+    <script src="{{ url_for('static', filename='js/cardapio.js') }}"></script>
+
+
+</body>
+
+</html>
